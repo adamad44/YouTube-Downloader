@@ -87,7 +87,7 @@ def downloadList(video_urls):
             ]
             output = subprocess.run(command)
     else:
-        messagebox.showerror("error", "please enter some links")
+        messagebox.showerror("error", "please enter a link")
 
 
 

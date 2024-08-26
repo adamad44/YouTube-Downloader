@@ -18,9 +18,9 @@ global folder_selected
 fileList = []
 selectedFileContents = ""
 
+# import a list of links from a text file and insert into text box
 def importList():
     try:
-
         file_selected = filedialog.askopenfilename()
         openedFile = open(file_selected, "r+")
         selectedFileContents = openedFile.read()
@@ -30,6 +30,8 @@ def importList():
         fileList = selectedFileContents.split("\n")
     except:
         pass
+
+# get the size of a video from a youtube link
 def get_video_size(url):
     command = ['yt-dlp', '-f', 'bestvideo[height<=1080]+bestaudio/best[height<=1080]', '-J', url]
     result = subprocess.run(command, capture_output=True, text=True)
@@ -42,6 +44,7 @@ def get_video_size(url):
         return 0
 
 
+# calculate the size of all the videos in the list
 def calculateSize():
     fileListUpdatedUnflitered = (listBox.get("1.0", END)).split("\n")
     fileListUpdated = []
@@ -66,9 +69,7 @@ def calculateSize():
     
         
     
-
-
-
+# download the list of videos
 def downloadList(video_urls):
     if "youtube" in (str(listBox.get("1.0", END)).lower()):
 
@@ -92,6 +93,7 @@ def downloadList(video_urls):
 
 
 
+# start threads
 
 def start_calculate_size_thread():
     threading.Thread(target=calculateSize).start()
@@ -102,7 +104,7 @@ def downloadListThread(video_urls):
 
 
 
-
+# UI elements
 
 title = Label(text="YouTube Downloader", font="Verdana 23", pady=5)
 title.pack()

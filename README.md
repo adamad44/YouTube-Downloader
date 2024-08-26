@@ -40,18 +40,15 @@ YouTube Downloader is a simple and user-friendly application that allows you to 
     - Import a list of YouTube URLs.
     - Download videos to your selected folder.
 
-## Screenshots
-![Main Interface](screenshots/main_interface.png)
-
 ## Contributing
 Contributions are welcome! Please fork the repository and submit a pull request.
 
 ## License
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
+This project is licensed under the MIT License. See the [LICENSE](LICENSE.md) file for details.
 
 ## Acknowledgements
 - [Tkinter](https://docs.python.org/3/library/tkinter.html) - Python's de-facto standard GUI package.
 - [tkmacosx](https://pypi.org/project/tkmacosx/) - Additional widgets for Tkinter on macOS.
 
 ## Contact
-For any inquiries or issues, please contact [yourname@domain.com](mailto:yourname@domain.com).
+For any inquiries or issues, please contact (mailto:adam.python3@gmail.com).

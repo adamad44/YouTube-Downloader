@@ -31,14 +31,13 @@ def importList():
     except:
         pass
 
-
+# video size functions
 def get_video_size(url):
     command = ['yt-dlp', '-f', 'bestvideo[height<=1080]+bestaudio/best[height<=1080]', '-J', url]
     result = subprocess.run(command, capture_output=True, text=True)
     try:
         metadata = json.loads(result.stdout)
         video_filesize = metadata.get('requested_formats', [{}])[0].get('filesize', 0)
-        print(video_filesize)
         audio_filesize = metadata.get('requested_formats', [{}])[1].get('filesize', 0)
         return (video_filesize or 0) + (audio_filesize or 0)
     except (json.JSONDecodeError, IndexError, KeyError):
@@ -50,11 +49,8 @@ def get_video_size_max_quality(url):
     
     try:
         metadata = json.loads(result.stdout)
-        
-        # Extract the video and audio filesize
         video_filesize = metadata.get('requested_formats', [{}])[0].get('filesize', 0)
         audio_filesize = metadata.get('requested_formats', [{}])[1].get('filesize', 0)
-        
         return (video_filesize or 0) + (audio_filesize or 0)
     except (json.JSONDecodeError, IndexError, KeyError):
         return 0
@@ -70,7 +66,6 @@ def calculateSize():
             pass
 
 
-    print(fileListUpdated)
     root.after(0, lambda: sizeLabel.config(text="Calculating"))
     root.after(0, lambda: downloadListButton.config(bg="grey", state="disabled"))
     total_size = sum(get_video_size(url) for url in fileListUpdated)
@@ -86,15 +81,17 @@ def calculateSize():
 def downloadList(video_urls):
     if "youtube" in (str(listBox.get("1.0", END)).lower()):
         countOfVideos = 0
+
         for i in video_urls:
             if "youtube" in i:
                 countOfVideos += 1
         folder_path = filedialog.askdirectory()
+
         if not os.path.exists(folder_path):
             os.makedirs(folder_path)
         count = 1
-        for url in video_urls:
 
+        for url in video_urls:
             statusLabel.config(text=f"Status: Downloading video {count}/{countOfVideos}")
             downloadListButton.config(bg="grey", state="disabled")
             output_path = os.path.join(folder_path, '%(title)s.%(ext)s')
@@ -110,20 +107,23 @@ def downloadList(video_urls):
         statusLabel.config(text="Status: Done.")
         downloadListButton.config(bg="#c7fdff", state="normal")
         root.after(5000, changeStatusToReady)
+
     else:
         messagebox.showerror("error", "please enter a link")
 
 def downloadListMaxQuality(video_urls):
-    
     if "youtube" in (str(listBox.get("1.0", END)).lower()):
         countOfVideos = 0
+
         for i in video_urls:
             if "youtube" in i:
                 countOfVideos += 1
         folder_path = filedialog.askdirectory()
+
         if not os.path.exists(folder_path):
             os.makedirs(folder_path)
         count = 1
+
         for url in video_urls:
             statusLabel.config(text=f"Status: Downloading video {count}/{countOfVideos}")
             downloadListButton.config(bg="grey", state="disabled")
@@ -140,15 +140,19 @@ def downloadListMaxQuality(video_urls):
         statusLabel.config(text="Status: Done.")
         downloadListButton.config(bg="#c7fdff", state="normal")
         root.after(5000, changeStatusToReady)
+
     else:
         messagebox.showerror("error", "please enter a link")
 
 def calculateSizeMaxQuality():
     fileListUpdatedUnflitered = (listBox.get("1.0", END)).split("\n")
     fileListUpdated = []
+
     for item in fileListUpdatedUnflitered:
+
         if "youtube" in item:
             fileListUpdated.append(item)
+
         else:
             pass
 
@@ -160,6 +164,7 @@ def calculateSizeMaxQuality():
     
     if total == "0.00 MB":
         total = f"{(get_video_size(listBox.get("1.0", END))) / (1024 ** 2):.2f} MB"
+        
     root.after(0, lambda: sizeLabel.config(text=total))
     root.after(0, lambda: downloadListButton.config(bg="#c7fdff", state="normal"))
 

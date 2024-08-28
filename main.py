@@ -66,19 +66,21 @@ def calculateSize():
         total = f"{(get_video_size(listBox.get("1.0", END))) / (1024 ** 2):.2f} MB"
     root.after(0, lambda: sizeLabel.config(text=total))
     root.after(0, lambda: downloadListButton.config(bg="#c7fdff", state="normal"))
-    
-        
-    
-# download the list of videos
+
+
 def downloadList(video_urls):
     if "youtube" in (str(listBox.get("1.0", END)).lower()):
-
+        countOfVideos = 0
+        for i in video_urls:
+            if "youtube" in i:
+                countOfVideos += 1
         folder_path = filedialog.askdirectory()
         if not os.path.exists(folder_path):
             os.makedirs(folder_path)
-
+        count = 1
         for url in video_urls:
-            statusLabel.config(text="Status: Downloading")
+
+            statusLabel.config(text=f"Status: Downloading video {count}/{countOfVideos}")
             downloadListButton.config(bg="grey", state="disabled")
             output_path = os.path.join(folder_path, '%(title)s.%(ext)s')
             command = [
@@ -89,6 +91,7 @@ def downloadList(video_urls):
                 url
             ]
             output = subprocess.run(command)
+            count += 1
         statusLabel.config(text="Status: Done.")
         downloadListButton.config(bg="#c7fdff", state="normal")
         root.after(5000, changeStatusToReady)

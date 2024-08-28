@@ -18,7 +18,7 @@ global folder_selected
 fileList = []
 selectedFileContents = ""
 
-# import a list of links from a text file and insert into text box
+
 def importList():
     try:
         file_selected = filedialog.askopenfilename()
@@ -31,7 +31,7 @@ def importList():
     except:
         pass
 
-# get the size of a video from a youtube link
+
 def get_video_size(url):
     command = ['yt-dlp', '-f', 'bestvideo[height<=1080]+bestaudio/best[height<=1080]', '-J', url]
     result = subprocess.run(command, capture_output=True, text=True)
@@ -78,6 +78,8 @@ def downloadList(video_urls):
             os.makedirs(folder_path)
 
         for url in video_urls:
+            statusLabel.config(text="Status: Downloading")
+            downloadListButton.config(bg="grey", state="disabled")
             output_path = os.path.join(folder_path, '%(title)s.%(ext)s')
             command = [
                 'yt-dlp',
@@ -87,6 +89,9 @@ def downloadList(video_urls):
                 url
             ]
             output = subprocess.run(command)
+        statusLabel.config(text="Status: Done.")
+        downloadListButton.config(bg="#c7fdff", state="normal")
+        root.after(5000, changeStatusToReady)
     else:
         messagebox.showerror("error", "please enter a link")
 
@@ -101,6 +106,9 @@ def start_calculate_size_thread():
 def downloadListThread(video_urls):
     threading.Thread(target=downloadList, args=(video_urls,)).start()
 
+
+def changeStatusToReady():
+    statusLabel.config(text="Status: Ready")
 
 
 
@@ -130,7 +138,8 @@ downloadListButton.pack(side=tk.LEFT, anchor=N, padx=(22, 10), ipadx=6, ipady=6,
 calculateSizeButton = Button(buttonFrame, text="Calculate Size", font="Verdana 16 bold", bg="white", fg="black", border=None, command=start_calculate_size_thread)
 calculateSizeButton.pack(side=tk.LEFT, anchor=N, padx=(15, 10), ipadx=6, ipady=6, pady=(2, 1))
 
-
+statusLabel = Label(root, text="Status: Ready", font="Verdana 16", fg="green")
+statusLabel.pack(pady=(1, 1))
 
 
 root.mainloop()

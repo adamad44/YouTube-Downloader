@@ -8,10 +8,11 @@ import threading
 import os
 
 root = tk.Tk()
-root.config(width=600, height=700)
+width, height = 600,570
+root.config(width=width, height=height)
 root.title("YouTube Downloader")
-root.minsize(600, 700)
-root.maxsize(600, 700)
+root.minsize(width, height)
+root.maxsize(width, height)
 
 global selectedFileContents
 global folder_selected
@@ -187,16 +188,16 @@ def start_calculate_size_thread_max_quality():
 
 # UI elements
 
-title = Label(text="YouTube Downloader", font="Verdana 23", pady=5)
+title = Label(text="YouTube Downloader", font="Verdana 26", pady=5)
 title.pack()
 
-insertHereLabel = Label(root, text="Enter a link on each line", font="Verdana 12")
+insertHereLabel = Label(root, text="Enter a full youtube link on each line", font="Verdana 14")
 insertHereLabel.pack()
 
-listBox = Text(root, bg="white", fg="black", border=None, font="Verdana 15", height=20, width=50)
+listBox = Text(root, bg="white", fg="black", border=None, font="Verdana 20", height=10, width=40)
 listBox.pack()
 
-sizeLabel = Label(root, text="", font="Verdana 14", fg="red")
+sizeLabel = Label(root, text="", font="Verdana 18", fg="red")
 sizeLabel.pack(pady=(1, 1))
 
 
@@ -204,13 +205,13 @@ sizeLabel.pack(pady=(1, 1))
 buttonFrame = Frame(root)
 buttonFrame.pack(pady=(1, 1))
 
-importListButton = Button(buttonFrame, text="Import List", font="Verdana 16 bold", bg="white", fg="black", border=None, command=importList)
+importListButton = Button(buttonFrame, text="Import List", font="Verdana 15 bold", bg="white", fg="black", border=None, command=importList)
 importListButton.pack(side=tk.LEFT, anchor=N, padx=(10, 10), ipadx=6, ipady=6, pady=(2, 1))
 
-downloadListButton = Button(buttonFrame, text="Download List", font="Verdana 18 bold", bg="#c7fdff", fg="black", border=None, command=lambda: downloadListThread( (listBox.get("1.0", END)).split("\n") ))
+downloadListButton = Button(buttonFrame, text="Download List", font="Verdana 15 bold", bg="#c7fdff", fg="black", border=None, command=lambda: downloadListThread( (listBox.get("1.0", END)).split("\n") ))
 downloadListButton.pack(side=tk.LEFT, anchor=N, padx=(22, 10), ipadx=6, ipady=6, pady=(2, 1))
 
-calculateSizeButton = Button(buttonFrame, text="Calculate Size", font="Verdana 16 bold", bg="white", fg="black", border=None, command=start_calculate_size_thread)
+calculateSizeButton = Button(buttonFrame, text="Calculate Size", font="Verdana 15 bold", bg="white", fg="black", border=None, command=start_calculate_size_thread)
 calculateSizeButton.pack(side=tk.LEFT, anchor=N, padx=(15, 10), ipadx=6, ipady=6, pady=(2, 1))
 
 
@@ -221,9 +222,9 @@ statusLabel.pack(pady=(1, 1))
 smallInfoLabel = Label(root, text="Note: videos are downloaded in 1080p by default", font="Verdana 10", fg="grey")
 smallInfoLabel.pack(pady=(3, 0))
 
-downloadMaxQualityButton = Button(root, height = 40, text="Download Max Quality", font="Verdana 16 bold", bg="white", fg="black", border=None, command=lambda: downloadListThreadMaxQuality( (listBox.get("1.0", END)).split("\n") ))
+downloadMaxQualityButton = Button(root, height = 40, text="Download Max Quality", font="Verdana 14 bold", bg="white", fg="black", border=None, command=lambda: downloadListThreadMaxQuality( (listBox.get("1.0", END)).split("\n") ))
 downloadMaxQualityButton.pack(pady=(10,1))
 
-calculateSizeMaxQualityButton = Button(root, height = 40, text="Calculate Size Max Quality", font="Verdana 16 bold", bg="white", fg="black", border=None, command=start_calculate_size_thread_max_quality)
+calculateSizeMaxQualityButton = Button(root, height = 40, text="Calculate Max Quality File Size", font="Verdana 14 bold", bg="white", fg="black", border=None, command=start_calculate_size_thread_max_quality)
 calculateSizeMaxQualityButton.pack(pady=(10,1))
 root.mainloop()

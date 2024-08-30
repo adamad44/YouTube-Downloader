@@ -21,7 +21,7 @@ YouTube Downloader is a simple and user-friendly application that allows you to 
 ## Installation
 1. Clone the repository:
     ```sh
-    git clone https://github.com/yourusername/youtube-downloader.git
+    git clone https://github.com/adamad44/YouTube-Downloader
     cd youtube-downloader
     ```
 
